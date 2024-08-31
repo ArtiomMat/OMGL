@@ -5,6 +5,8 @@ The idea is to make a performant and well optimized wrapper for OpenGL to load c
 # Roadmap
 Might change too.
 - [ ] Basics.
+  - [x] Pushing the project.(I want something to be ticked lol)
+  - [ ] Setting up the basics.
   - [ ] An OpenGL context.
   - [ ] Handling models.
   - [ ] Rendering basic shapes with shaders.
@@ -21,6 +23,8 @@ Might change too.
   - [ ] Good ol' bump maps.
   - [ ] Normals.
   - [ ] Specular maps.
+- [ ] Extras.
+  - [ ] Font rendering. For now monospaced.
 
 
 # Making on Linux for Windows
