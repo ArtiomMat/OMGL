@@ -8,23 +8,26 @@ Might change too.
   - [x] Pushing the project.(I want something to be ticked lol)
   - [ ] Setting up the basics.
   - [ ] An OpenGL context.
-  - [ ] Handling models.
-  - [ ] Rendering basic shapes with shaders.
-  - [ ] Loading models and rendering them.
+  - [ ] Rendering loop
+  - [ ] Handling hard-coded models.
+  - [ ] Rendering said hard-coded models with shaders.
+  - [ ] Loading model files and rendering them.
   - [ ] Basic lighting.
   - [ ] Loading UVs and rendering them.
-- [ ] Improved lighting.
+- [ ] Advanced multi-source lighting.
+- [ ] Camera for viewing.
 - [ ] Advanced shading to prepare for next step.
   - [ ] Specular highlighting.
   - [ ] Metalic shaders.
   - [ ] Sheen.
   - [ ] Sub-surface scattering, a cool one.
-- [ ] Writing shaders for more complex things.
+- [ ] Writing shaders for more complex maps.
   - [ ] Good ol' bump maps.
-  - [ ] Normals.
+  - [ ] Normal maps.
   - [ ] Specular maps.
 - [ ] Extras.
   - [ ] Font rendering. For now monospaced.
+  - [ ] Using the new font renderer to render useful info.
 
 # Basic making
 Your usual:
