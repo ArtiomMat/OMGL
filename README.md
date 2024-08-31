@@ -26,9 +26,16 @@ Might change too.
 - [ ] Extras.
   - [ ] Font rendering. For now monospaced.
 
+# Basic making
+Your usual:
+```sh
+mkdir build
+cd build
+cmake ..
+make
+```
 
 # Making on Linux for Windows
-
 use `cmake` with the `toolchains/unix-win32.cmake` toolchain. In a nutshell:
 ```sh
 mkdir build

@@ -69,7 +69,7 @@ namespace OMGL
       return _x;
     }
   #else
-    #error Unknown platform so can't determine endian.
+    #error Unknown platform so cant determine endian.
   #endif
 
   static inline std::int16_t bigE(std::int16_t _x)

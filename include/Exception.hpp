@@ -46,9 +46,10 @@ namespace OMGL
     WriteException(const char* _str) : FileException(_str) {}
   };
 
-  // A system exception that has an unspecified reason, but from the libraries used.
+  // A system exception that has an unspecified reason, but from the libraries used. The type must provide a code.
   struct SystemException : Exception
   {
-    SystemException(const char* _str) : Exception(_str) {}
+    unsigned long long code;
+    SystemException(int code, const char* _str) : Exception(_str), code(false) {}
   };
 }

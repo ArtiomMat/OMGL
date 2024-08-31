@@ -5,7 +5,14 @@
 
 int main()
 {
-  OMGL::Font f("lol");
+  try
+  {
+    OMGL::Font f("lol");
+  }
+  catch (...)
+  {
+    puts("Error!");
+  }
   puts("What");
   return 0;
 }
