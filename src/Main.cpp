@@ -1,17 +1,20 @@
 #include <cstdio>
 
-#include "DisplayDriver.hpp"
+#include <exception>
+
+#include "Context.hpp"
 #include "Font.hpp"
 
 int main()
 {
+  throw OMGL::Exception("lol");
   try
   {
-    OMGL::Font f("lol");
+    OMGL::Context ctx(300, 300);
   }
-  catch (...)
+  catch (OMGL::SystemException& s)
   {
-    puts("Error!");
+    puts(s.str);
   }
   puts("What");
   return 0;

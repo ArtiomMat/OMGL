@@ -21,11 +21,11 @@ void* omglGetProcAddress(const char* str) noexcept
 
 // 200+ IQ
 template <typename T>
-static void throwingGetProcAddress(T*& f, const char* str)
+static void throwingGetProcAddress(T& f, const char* str)
 {
-  f = static_cast<T>(omglGetProcAddress(str));
+  f = reinterpret_cast<T>(omglGetProcAddress(str));
 
-  if ( == nullptr)
+  if (f == nullptr)
   {
     const char* msg = (std::string("Failed to load ") + str + ".").c_str();
     throw OMGL::SystemException(0, msg);

@@ -25,6 +25,8 @@ Might change too.
   - [ ] Good ol' bump maps.
   - [ ] Normal maps.
   - [ ] Specular maps.
+- [ ] Rigging.
+- [ ] Animation?
 - [ ] Extras.
   - [ ] Font rendering. For now monospaced.
   - [ ] Using the new font renderer to render useful info.

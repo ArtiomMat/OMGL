@@ -1,55 +1,68 @@
 #pragma once
 
+#include <exception>
+
 namespace OMGL
 {
-  struct Exception
+  // Compatible with std by inheritting std::exception
+  class Exception : public std::exception
   {
+    public:
     const char* str;
     Exception(const char* _str) : str(_str) {}
+    const char* what() const noexcept override { return str; }
   };
 
   // General networking exception
-  struct NetworkException : Exception
+  class NetworkException : public Exception
   {
+    public:
     NetworkException(const char* _str) : Exception(_str) {}
   };
 
   // Exception with allocation or deletion.
-  struct MemoryException : Exception
+  class MemoryException : public Exception
   {
+    public:
     MemoryException(const char* _str) : Exception(_str) {}
   };
   // Exception when indexing memory, caught before a potential segfault.
-  struct IndexException : MemoryException
+  class IndexException : public MemoryException
   {
+    public:
     IndexException(const char* _str) : MemoryException(_str) {}
   };
 
   // General file exception.
-  struct FileException : Exception
+  class FileException : public Exception
   {
+    public:
     FileException(const char* _str) : Exception(_str) {}
   };
   // Exception with opening a file.
-  struct OpenException : FileException
+  class OpenException : public FileException
   {
+    public:
     OpenException(const char* _str) : FileException(_str) {}
   };
   // Exception with opening a file.
-  struct ReadException : FileException
+  class ReadException : public FileException
   {
+    public:
     ReadException(const char* _str) : FileException(_str) {}
   };
   // Exception with opening a file.
-  struct WriteException : FileException
+  class WriteException : public FileException
   {
+    public:
     WriteException(const char* _str) : FileException(_str) {}
   };
 
   // A system exception that has an unspecified reason, but from the libraries used. The type must provide a code.
-  struct SystemException : Exception
+  class SystemException : public Exception
   {
+    public:
     unsigned long long code;
-    SystemException(int code, const char* _str) : Exception(_str), code(false) {}
+    SystemException(int _code, const char* _str) : Exception(_str), code(_code) {}
   };
 }
