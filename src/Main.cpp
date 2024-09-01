@@ -7,10 +7,11 @@
 
 int main()
 {
-  throw OMGL::Exception("lol");
   try
   {
     OMGL::Context ctx(300, 300);
+    ctx.makeCurrent();
+    while(1) {ctx.swapBuffers(); Sleep(100);}
   }
   catch (OMGL::SystemException& s)
   {

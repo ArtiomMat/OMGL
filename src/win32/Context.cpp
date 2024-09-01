@@ -14,10 +14,10 @@
 
 namespace OMGL
 {
-  static LRESULT CALLBACK wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-  {
-    return DefWindowProcW(hWnd, uMsg, wParam, lParam);
-  }
+  // static LRESULT CALLBACK wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+  // {
+  //   return DefWindowProcW(hWnd, uMsg, wParam, lParam);
+  // }
 
   Context::Context(unsigned width, unsigned height)
   {
@@ -25,7 +25,7 @@ namespace OMGL
 
     constexpr wchar_t CLASS_NAME[] = L"OMGL CLASS";
     WNDCLASSW wc = { };
-    wc.lpfnWndProc = wndProc;
+    wc.lpfnWndProc = DefWindowProcW;
     wc.hInstance = GetModuleHandle(NULL);
     wc.lpszClassName = CLASS_NAME;
 
@@ -57,7 +57,7 @@ namespace OMGL
     hDC = GetDC(hWnd);
 
     // Now for the OpenGL part
-    PIXELFORMATDESCRIPTOR pfd =
+    constexpr PIXELFORMATDESCRIPTOR pfd =
     {
       sizeof(PIXELFORMATDESCRIPTOR),
       1,
@@ -102,6 +102,26 @@ namespace OMGL
 
   void Context::swapBuffers()
   {
+    while (PeekMessageW(&msg, hWnd, 0, 0, PM_REMOVE))
+    {
+      TranslateMessage(&msg);
+      switch (msg.message)
+      {
+        // Idk...
+        case WM_SYSCOMMAND:
+        if (msg.wParam == SC_CLOSE)
+        {
+          exit(0);
+        }
+        break;
+
+        // If this unhandled then just dispatch it to the DefWindowProcW() 
+        default:
+        printf("%x\n", msg.message);
+        DispatchMessageW(&msg);
+      }
+    }
+
     SwapBuffers(hDC);
   }
 

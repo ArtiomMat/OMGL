@@ -27,6 +27,7 @@ namespace OMGL
 
     private:
     #ifdef _WIN32
+      MSG msg;
       HWND hWnd = nullptr;
       HDC hDC = nullptr;
       HGLRC hGLRC = nullptr;
