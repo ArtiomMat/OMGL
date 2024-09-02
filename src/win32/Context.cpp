@@ -4,24 +4,14 @@
 // To define GLenum and all the stuff we need
 #include <GL.hpp>
 
-#include <GL/wgl.h>
-#include <GL/wglext.h>
-
-#define UNICODE
-#include <windows.h>
-
+#include "windows.hpp"
 #include "Context.hpp"
 
 namespace OMGL
 {
-  // static LRESULT CALLBACK wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-  // {
-  //   return DefWindowProcW(hWnd, uMsg, wParam, lParam);
-  // }
-
   Context::Context(unsigned width, unsigned height)
   {
-    constexpr DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
+    constexpr DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 
     constexpr wchar_t CLASS_NAME[] = L"OMGL CLASS";
     WNDCLASSW wc = { };
@@ -61,17 +51,19 @@ namespace OMGL
     {
       sizeof(PIXELFORMATDESCRIPTOR),
       1,
-      PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,    // Flags
-      PFD_TYPE_RGBA,        // The kind of framebuffer. RGBA or palette.
-      32,                   // Colordepth of the framebuffer.
+      PFD_DRAW_TO_WINDOW
+        | PFD_SUPPORT_OPENGL
+        | PFD_DOUBLEBUFFER,             // Flags
+      PFD_TYPE_RGBA,                    // RGBA frame buffer.
+      32,                               // Frambe buffer bps.
       0, 0, 0, 0, 0, 0,
       0,
       0,
       0,
       0, 0, 0, 0,
-      24,                   // Number of bits for the depthbuffer
-      8,                    // Number of bits for the stencilbuffer
-      0,                    // Number of Aux buffers in the framebuffer.
+      24,                               // Depth buffer bps.
+      8,                                // Stencil buffer bps.
+      0,                                // No Aux buffers in the framebuffer.
       PFD_MAIN_PLANE,
       0,
       0, 0, 0
@@ -95,38 +87,72 @@ namespace OMGL
     }
   }
 
-  void Context::makeCurrent()
+  void Context::defaultEventHandler(Context& ctx, Context::Event& e)
   {
-    wglMakeCurrent(hDC, hGLRC);
+    switch (e.type)
+    {
+      case Context::EventType::Close:
+      exit(0);
+      break;
+
+      default:
+      break;
+    }
   }
 
-  void Context::swapBuffers()
+  void Context::handleEvent() noexcept
   {
+    if (event.type != EventType::_Null && eventHandler != nullptr)
+    {
+      eventHandler(*this, event);
+    }
+  }
+
+  void Context::handleEvents() noexcept
+  {
+    event.type = EventType::_Null;
+
+    // We handle the events we want to handle here because wndProc is an external
+    // function and has no direct way for knowing the context itself.
     while (PeekMessageW(&msg, hWnd, 0, 0, PM_REMOVE))
     {
       TranslateMessage(&msg);
       switch (msg.message)
       {
-        // Idk...
+        // This is just for me for I3 because it doesn't send WM_CLOSE for some reason!
         case WM_SYSCOMMAND:
         if (msg.wParam == SC_CLOSE)
         {
-          exit(0);
+          event.type = EventType::Close;
+          handleEvent();
         }
         break;
+        case WM_CLOSE:
+        event.type = EventType::Close;
+        handleEvent();
+        break;
 
-        // If this unhandled then just dispatch it to the DefWindowProcW() 
         default:
-        printf("%x\n", msg.message);
         DispatchMessageW(&msg);
+        return; // Because we dispatch in another case
       }
     }
+  }
 
-    SwapBuffers(hDC);
+  bool Context::makeCurrent() noexcept
+  {
+    return wglMakeCurrent(hDC, hGLRC);
+  }
+
+  bool Context::swapBuffers() noexcept
+  {
+    return SwapBuffers(hDC);
   }
 
   Context::~Context()
   {
+    ReleaseDC(hWnd, hDC);
+    DestroyWindow(hWnd);
     wglDeleteContext(hGLRC);
   }
 }

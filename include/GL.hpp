@@ -12,7 +12,7 @@
 // #endif
 
 // void omglCreateContext();
-// void omglMakeCurrent();
+// void omglMakeCurrent(OMGL::Context&);
 // void omglGetCurrentContext();
 // void omglDestroyContext();
 // void omglSwapBuffers();

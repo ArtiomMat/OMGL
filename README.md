@@ -7,7 +7,7 @@ Might change too.
 - [ ] Basics.
   - [x] Pushing the project.(I want something to be ticked lol)
   - [x] Setting up the basics.
-  - [ ] An OpenGL context.
+  - [x] An OpenGL context.
   - [ ] Rendering loop
   - [ ] Handling hard-coded models.
   - [ ] Rendering said hard-coded models with shaders.
