@@ -102,9 +102,16 @@ namespace OMGL
 
   void Context::handleEvent() noexcept
   {
-    if (event.type != EventType::_Null && eventHandler != nullptr)
+    if (event.type != EventType::_Null)
     {
-      eventHandler(*this, event);
+      if (eventHandler != nullptr)
+      {
+        eventHandler(*this, event);
+      }
+      else
+      {
+        defaultEventHandler(*this, event);
+      }
     }
   }
 
