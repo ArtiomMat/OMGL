@@ -17,8 +17,10 @@
 // void omglDestroyContext();
 // void omglSwapBuffers();
 
+// WILL NOT WORK WITHOUT CONTEXT!
 // If a function fails to load nullptr is returned. Up to the caller to decide what to do with that.
 void* omglGetProcAddress(const char* str) noexcept;
+// WILL NOT WORK WITHOUT CONTEXT!
 // Loads all the functions present in this here header. Throws an omgl::SystemException if a function failed to load, the code variable is irrelevant.
 void omglGetAllProcAddresses();
 
@@ -27,6 +29,8 @@ void omglGetAllProcAddresses();
 #else
   #define EXTERN extern
 #endif
+
+EXTERN PFNGLGENBUFFERSPROC glGenBuffers;
 
 EXTERN PFNGLUSEPROGRAMPROC glUseProgram;
 EXTERN PFNGLBINDBUFFERPROC glBindBuffer;

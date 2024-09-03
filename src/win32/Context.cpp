@@ -6,6 +6,7 @@
 
 #include "windows.hpp"
 #include "Context.hpp"
+#include <iostream>
 
 namespace omgl
 {
@@ -99,11 +100,12 @@ namespace omgl
     }
   }
 
-  void Context::DefaultEventHandler(Context& ctx, const Context::Event& e)
+  void Context::DefaultEventHandler(Context&, const Context::Event& e)
   {
     switch (e.type)
     {
       case Context::EventType::Close:
+      std::cout << "Close event, exitting...\n";
       exit(0);
       break;
 

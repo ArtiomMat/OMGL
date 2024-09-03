@@ -4,7 +4,9 @@
 #include <GL/wgl.h>
 #include <GL/wglext.h>
 
-#include <string>
+#include "windows.hpp"
+
+#include <iostream>
 
 void* omglGetProcAddress(const char* str) noexcept
 {
@@ -12,30 +14,9 @@ void* omglGetProcAddress(const char* str) noexcept
   void* p = (void*) wglGetProcAddress(str);
   if(p == nullptr)
   {
-    HMODULE module = LoadLibraryA("opengl32.dll");
+    HMODULE module = LoadLibraryW(L"opengl32.dll");
     p = (void*) GetProcAddress(module, str);
   }
 
   return p;
-}
-
-// 200+ IQ
-template <typename T>
-static void ThrowingGetProcAddress(T& f, const char* str)
-{
-  f = reinterpret_cast<T>(omglGetProcAddress(str));
-
-  if (f == nullptr)
-  {
-    const char* msg = (std::string("Failed to load ") + str + ".").c_str();
-    throw omgl::SystemException(0, msg);
-  }
-}
-
-#define LOAD(S) ThrowingGetProcAddress(S, #S)
-
-void omglGetAllProcAddresses()
-{
-  LOAD(glUseProgram);
-  LOAD(glBindBuffer);
 }
