@@ -4,7 +4,7 @@
 #include <memory>
 #include <exception>
 
-#include "GL.hpp"
+#include "gl.hpp"
 #include "ClockDriver.hpp"
 #include "Context.hpp"
 #include "Font.hpp"
@@ -15,7 +15,7 @@ static void EventHandler(omgl::Context&, const omgl::Context::Event& e)
 {
   switch (e.type)
   {
-    case omgl::Context::EventType::Close:
+    case omgl::Context::Event::Type::Close:
     run_loop = false;
     break;
 
@@ -51,6 +51,6 @@ int main()
 
     clockDriver.SleepRemainder();
   }
-  
+
   return 0;
 }

@@ -17,19 +17,19 @@ namespace omgl
   class Context
   {
     public:
-    enum class EventType : uint8_t
-    {
-      _Null,
-
-      Close,
-      // Includes mouse keys
-      Press, Release,
-      MouseMove, // Moving the mouse
-    };
-
     struct Event
     {
-      EventType type;
+      enum class Type : uint8_t
+      {
+        _Null,
+
+        Close,
+        // Includes mouse keys
+        Press, Release,
+        MouseMove, // Moving the mouse
+      };
+
+      Type type;
       union
       {
         struct

@@ -1,5 +1,5 @@
 #define _OMGL_SOURCE
-#include "GL.hpp"
+#include "gl.hpp"
 
 #include <GL/wgl.h>
 #include <GL/wglext.h>

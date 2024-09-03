@@ -2,8 +2,7 @@
 
 
 // To define GLenum and all the stuff we need
-#include <GL.hpp>
-
+#include "gl.hpp"
 #include "windows.hpp"
 #include "Context.hpp"
 #include <iostream>
@@ -104,7 +103,7 @@ namespace omgl
   {
     switch (e.type)
     {
-      case Context::EventType::Close:
+      case Context::Event::Type::Close:
       std::cout << "Close event, exitting...\n";
       exit(0);
       break;
@@ -116,7 +115,7 @@ namespace omgl
 
   void Context::HandleEvent() noexcept
   {
-    if (event.type != EventType::_Null)
+    if (event.type != Event::Type::_Null)
     {
       if (event_handler != nullptr)
       {
@@ -131,7 +130,7 @@ namespace omgl
 
   void Context::HandleEvents() noexcept
   {
-    event.type = EventType::_Null;
+    event.type = Event::Type::_Null;
 
     // We handle the events we want to handle here because wndProc is an external
     // function and has no direct way for knowing the context itself.
@@ -144,12 +143,12 @@ namespace omgl
         case WM_SYSCOMMAND:
         if (msg.wParam == SC_CLOSE)
         {
-          event.type = EventType::Close;
+          event.type = Event::Type::Close;
           HandleEvent();
         }
         break;
         case WM_CLOSE:
-        event.type = EventType::Close;
+        event.type = Event::Type::Close;
         HandleEvent();
         break;
 
