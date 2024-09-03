@@ -10,7 +10,7 @@
 #include <cstdint>
 #include "Exception.hpp"
 
-namespace OMGL
+namespace omgl
 {
   // A rather simple wrapper over OpenGL and whatever system window manager is used.
   // Any functions that are ascosiated with the context are included in the class.

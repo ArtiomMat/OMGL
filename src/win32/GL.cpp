@@ -28,7 +28,7 @@ static void ThrowingGetProcAddress(T& f, const char* str)
   if (f == nullptr)
   {
     const char* msg = (std::string("Failed to load ") + str + ".").c_str();
-    throw OMGL::SystemException(0, msg);
+    throw omgl::SystemException(0, msg);
   }
 }
 

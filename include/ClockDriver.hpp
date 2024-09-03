@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace OMGL
+namespace omgl
 {
   // Miliseconds, can contain ((2^31)-1)/1000/60/60/24=24.8 days worth of play-time, since everything is measured relative to tmr_init.
   // Signed so that there is no unexpected stuff when math is done and <0 is used.

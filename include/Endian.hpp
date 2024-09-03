@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace OMGL
+namespace omgl
 {
   // Little endian
   #ifdef __x86_64__

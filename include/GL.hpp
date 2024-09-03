@@ -12,14 +12,14 @@
 // #endif
 
 // void omglCreateContext();
-// void omglMakeCurrent(OMGL::Context&);
+// void omglMakeCurrent(omgl::Context&);
 // void omglGetCurrentContext();
 // void omglDestroyContext();
 // void omglSwapBuffers();
 
 // If a function fails to load nullptr is returned. Up to the caller to decide what to do with that.
 void* omglGetProcAddress(const char* str) noexcept;
-// Loads all the functions present in this here header. Throws an OMGL::SystemException if a function failed to load, the code variable is irrelevant.
+// Loads all the functions present in this here header. Throws an omgl::SystemException if a function failed to load, the code variable is irrelevant.
 void omglGetAllProcAddresses();
 
 #ifdef _OMGL_SOURCE

@@ -7,7 +7,7 @@
 #include "windows.hpp"
 #include "Context.hpp"
 
-namespace OMGL
+namespace omgl
 {
   Context::Context(unsigned width, unsigned height)
   {

@@ -1,6 +1,6 @@
 #include "ClockDriver.hpp"
 
-namespace OMGL
+namespace omgl
 {
   thread_local Time ClockDriver::begin_frame_time;
 

@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 
-namespace OMGL
+namespace omgl
 {
   enum
   {

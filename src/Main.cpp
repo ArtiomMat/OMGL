@@ -11,9 +11,9 @@
 
 int main()
 {
-  auto& clockDriver = OMGL::ClockDriver::instance();
+  auto& clockDriver = omgl::ClockDriver::instance();
 
-  OMGL::Context ctx(300, 300);
+  omgl::Context ctx(300, 300);
   ctx.MakeCurrent();
 
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

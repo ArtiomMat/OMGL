@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <fstream>
 
-namespace OMGL
+namespace omgl
 {
   class Font
   {

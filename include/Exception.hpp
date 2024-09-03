@@ -2,7 +2,7 @@
 
 #include <exception>
 
-namespace OMGL
+namespace omgl
 {
   // Compatible with std by inheritting std::exception
   class Exception : public std::exception
