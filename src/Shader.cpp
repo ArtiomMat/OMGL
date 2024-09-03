@@ -29,6 +29,17 @@ namespace omgl
     }
 
     id = glCreateShader(gl_type);
+
+    if (id == 0)
+    {
+      throw SystemException(glGetError(), "Creating shader.");
+    }
+
+    bool _success = Reload();
+    if (success != nullptr)
+    {
+      *success = _success;
+    }
   }
 
   bool Shader::Reload()
@@ -63,6 +74,8 @@ namespace omgl
     {
       glGetShaderInfoLog(id, INFO_LOG_SIZE, nullptr, info_log);
     }
+
+    // TODO: Reattach, also what if program attaches a different shader of this type and then this shader still thinks it's attached????
 
     return success != 0;
   }

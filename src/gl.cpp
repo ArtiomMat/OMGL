@@ -39,6 +39,7 @@ void omglGetAllProcAddresses()
   LOAD(glVertexAttribPointer);
   LOAD(glEnableVertexAttribArray);
 
+  LOAD(glCreateProgram);
   LOAD(glLinkProgram);
   LOAD(glGetProgramInfoLog);
   LOAD(glGetProgramiv);
