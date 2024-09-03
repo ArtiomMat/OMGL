@@ -9,6 +9,7 @@ Might change too.
   - [x] Setting up the basics.
   - [x] An OpenGL context.
   - [x] Rendering loop.
+  - [x] Wrappers for shaders and programs.
   - [ ] Handling hard-coded models.
   - [ ] Rendering said hard-coded models with shaders.
   - [ ] Loading model files and rendering them.
