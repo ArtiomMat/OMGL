@@ -1,9 +1,11 @@
 #include <cstdio>
 
+#include <iostream>
+#include <memory>
 #include <exception>
 
+#include "GL.hpp"
 #include "ClockDriver.hpp"
-
 #include "Context.hpp"
 #include "Font.hpp"
 
@@ -11,21 +13,21 @@ int main()
 {
   auto& clockDriver = OMGL::ClockDriver::instance();
 
-  try
+  OMGL::Context ctx(300, 300);
+  ctx.MakeCurrent();
+
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+  while (1)
   {
-    OMGL::Context ctx(300, 300);
-    ctx.makeCurrent();
-    while (1)
-    {
-      ctx.swapBuffers();
-      ctx.handleEvents();
-      clockDriver.sleepRemainder();
-    }
+    ctx.SwapBuffers();
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    ctx.HandleEvents();
+
+    clockDriver.SleepRemainder();
   }
-  catch (OMGL::SystemException &s)
-  {
-    puts(s.str);
-  }
-  puts("What");
+
+  std::cout << "What\n";
   return 0;
 }

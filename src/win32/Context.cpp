@@ -16,7 +16,7 @@ namespace OMGL
     constexpr wchar_t CLASS_NAME[] = L"OMGL CLASS";
     WNDCLASSW wc = { };
     wc.lpfnWndProc = DefWindowProcW;
-    wc.hInstance = GetModuleHandle(NULL);
+    wc.hInstance = GetModuleHandle(nullptr);
     wc.lpszClassName = CLASS_NAME;
 
     if (!RegisterClassW(&wc))
@@ -24,36 +24,48 @@ namespace OMGL
       throw SystemException(GetLastError(), "Registering class.");
     }
 
-    hWnd = CreateWindowExW(
+    // Calculate full window size given desired client-area size
+    RECT rect{
+      .left = 0,
+      .top = 0,
+      .right = static_cast<LONG>(width),
+      .bottom = static_cast<LONG>(height),
+    };
+    AdjustWindowRect(&rect, style, false);
+    unsigned real_width = rect.right - rect.left;
+    unsigned real_height = rect.bottom - rect.top;
+
+    hwnd = CreateWindowExW(
       0,
       CLASS_NAME,
       L"OMGL",
       style,
 
-      0,0, width, height,
+      CW_USEDEFAULT, CW_USEDEFAULT,
+      real_width, real_height,
 
-      NULL,
-      NULL,
-      GetModuleHandle(NULL),
-      NULL
+      nullptr,
+      nullptr,
+      GetModuleHandle(nullptr),
+      nullptr
     );
-    if (hWnd == nullptr)
+    if (hwnd == nullptr)
     {
       throw SystemException(GetLastError(), "Creating window.");
     }
 
-    ShowWindow(hWnd, SW_SHOWNORMAL);
+    ShowWindow(hwnd, SW_SHOWNORMAL);
 
-    hDC = GetDC(hWnd);
+    hdc = GetDC(hwnd);
 
     // Now for the OpenGL part
     constexpr PIXELFORMATDESCRIPTOR pfd =
     {
       sizeof(PIXELFORMATDESCRIPTOR),
       1,
-      PFD_DRAW_TO_WINDOW
-        | PFD_SUPPORT_OPENGL
-        | PFD_DOUBLEBUFFER,             // Flags
+      PFD_DRAW_TO_WINDOW                // Flags
+      | PFD_SUPPORT_OPENGL
+      | PFD_DOUBLEBUFFER,
       PFD_TYPE_RGBA,                    // RGBA frame buffer.
       32,                               // Frambe buffer bps.
       0, 0, 0, 0, 0, 0,
@@ -69,25 +81,25 @@ namespace OMGL
       0, 0, 0
     };
 
-    int pf = ChoosePixelFormat(hDC, &pfd);
+    int pf = ChoosePixelFormat(hdc, &pfd);
     if (!pf)
     {
       throw SystemException(GetLastError(), "Choosing pixel format.");
     }
 
-    if (!SetPixelFormat(hDC, pf, &pfd))
+    if (!SetPixelFormat(hdc, pf, &pfd))
     {
       throw SystemException(GetLastError(), "Setting pixel format.");
     }
 
-    hGLRC = wglCreateContext(hDC);
-    if (hGLRC == nullptr)
+    hglrc = wglCreateContext(hdc);
+    if (hglrc == nullptr)
     {
       throw SystemException(GetLastError(), "Creating context.");
     }
   }
 
-  void Context::defaultEventHandler(Context& ctx, Context::Event& e)
+  void Context::DefaultEventHandler(Context& ctx, const Context::Event& e)
   {
     switch (e.type)
     {
@@ -100,28 +112,28 @@ namespace OMGL
     }
   }
 
-  void Context::handleEvent() noexcept
+  void Context::HandleEvent() noexcept
   {
     if (event.type != EventType::_Null)
     {
-      if (eventHandler != nullptr)
+      if (event_handler != nullptr)
       {
-        eventHandler(*this, event);
+        event_handler(*this, event);
       }
       else
       {
-        defaultEventHandler(*this, event);
+        DefaultEventHandler(*this, event);
       }
     }
   }
 
-  void Context::handleEvents() noexcept
+  void Context::HandleEvents() noexcept
   {
     event.type = EventType::_Null;
 
     // We handle the events we want to handle here because wndProc is an external
     // function and has no direct way for knowing the context itself.
-    while (PeekMessageW(&msg, hWnd, 0, 0, PM_REMOVE))
+    while (PeekMessageW(&msg, hwnd, 0, 0, PM_REMOVE))
     {
       TranslateMessage(&msg);
       switch (msg.message)
@@ -131,12 +143,12 @@ namespace OMGL
         if (msg.wParam == SC_CLOSE)
         {
           event.type = EventType::Close;
-          handleEvent();
+          HandleEvent();
         }
         break;
         case WM_CLOSE:
         event.type = EventType::Close;
-        handleEvent();
+        HandleEvent();
         break;
 
         default:
@@ -146,20 +158,20 @@ namespace OMGL
     }
   }
 
-  bool Context::makeCurrent() noexcept
+  bool Context::MakeCurrent() const noexcept
   {
-    return wglMakeCurrent(hDC, hGLRC);
+    return wglMakeCurrent(hdc, hglrc);
   }
 
-  bool Context::swapBuffers() noexcept
+  bool Context::SwapBuffers() const noexcept
   {
-    return SwapBuffers(hDC);
+    return ::SwapBuffers(hdc);
   }
 
   Context::~Context()
   {
-    ReleaseDC(hWnd, hDC);
-    DestroyWindow(hWnd);
-    wglDeleteContext(hGLRC);
+    ReleaseDC(hwnd, hdc);
+    DestroyWindow(hwnd);
+    wglDeleteContext(hglrc);
   }
 }

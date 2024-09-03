@@ -21,7 +21,7 @@ void* omglGetProcAddress(const char* str) noexcept
 
 // 200+ IQ
 template <typename T>
-static void throwingGetProcAddress(T& f, const char* str)
+static void ThrowingGetProcAddress(T& f, const char* str)
 {
   f = reinterpret_cast<T>(omglGetProcAddress(str));
 
@@ -32,7 +32,7 @@ static void throwingGetProcAddress(T& f, const char* str)
   }
 }
 
-#define LOAD(S) throwingGetProcAddress(S, #S)
+#define LOAD(S) ThrowingGetProcAddress(S, #S)
 
 void omglGetAllProcAddresses()
 {

@@ -24,7 +24,7 @@ namespace OMGL
     int32_t size; // Header size
     int32_t flags;
     int32_t length; // how many glyphs
-    int32_t glyphSize;
+    int32_t glyph_size;
     int32_t height;
     int32_t width;
   } psf2_t;
@@ -52,7 +52,7 @@ namespace OMGL
     delete [] data;
   }
 
-  void Font::open(const char* fp, Priority priority)
+  void Font::Open(const char* fp, Priority priority)
   {
     union
     {
@@ -110,31 +110,31 @@ namespace OMGL
 
     if (_type == PSF1)
     {
-      glyphsN = 256;
+      glyphs_n = 256;
 
       if (psf1.mode)
       {
         if (psf1.mode & PSF1_MODE512)
         {
-          glyphsN = 512;
+          glyphs_n = 512;
         }
         
         puts("Note frome font: Unicode table not supported yet.");
       }
 
       // Setup row size, psf1 width is always 8 pixels
-      rowSize = 1;
+      row_size = 1;
       height = psf1.size;
-      int charSize = rowSize*psf1.size;
+      int char_size = row_size*psf1.size;
 
       // If we prioritize speed we will read all the characters, otherwise we read one for each glyph we get
       if (priority == Priority::Speed)
       {
-        data = new char[glyphsN * charSize];
-        stream.read(data, glyphsN * charSize);
+        data = new char[glyphs_n * char_size];
+        stream.read(data, glyphs_n * char_size);
         if (stream.fail())
         {
-          throw ReadException((std::stringstream("Bad PSF file. Read") << stream.gcount() << "characters but need" << glyphsN << ".").str().c_str());
+          throw ReadException((std::stringstream("Bad PSF file. Read") << stream.gcount() << "characters but need" << glyphs_n << ".").str().c_str());
         }
 
         // Don't need the file anymore in Priority::Speed
@@ -142,7 +142,7 @@ namespace OMGL
       }
       else // P_MEMORY
       {
-        data = new char[charSize];
+        data = new char[char_size];
       }
     }
     else
@@ -152,7 +152,7 @@ namespace OMGL
       // Make endian readable on this system
       for (unsigned long i = 0; i < sizeof(__array)/sizeof(__array[0]); i++)
       {
-        __array[i] = lilE(__array[i]);
+        __array[i] = LilE(__array[i]);
       }
 
       // TODO
@@ -161,14 +161,14 @@ namespace OMGL
     width = (_type == PSF1 ? 8 : psf2.width);
   }
 
-  char* Font::getGlyph(unsigned g) noexcept
+  char* Font::glyph(unsigned g) noexcept
   {
-    if (g > glyphsN)
+    if (g > glyphs_n)
     {
       return nullptr;
     }
 
-    unsigned index =  g * rowSize * height;
+    unsigned index =  g * row_size * height;
     if (priority == Priority::Speed)
     {
       return &((char*)data)[index];
@@ -177,7 +177,7 @@ namespace OMGL
     {
       // TODO: Make it depend on flags too
       stream.seekg(_type + index);
-      stream.read(data, rowSize * height);
+      stream.read(data, row_size * height);
       if (stream.fail())
       {
         return nullptr;

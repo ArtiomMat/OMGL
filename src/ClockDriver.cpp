@@ -2,36 +2,36 @@
 
 namespace OMGL
 {
-  thread_local Time ClockDriver::beginFrameTime;
+  thread_local Time ClockDriver::begin_frame_time;
 
   unsigned long long ClockDriver::t0;
 
-  thread_local Time ClockDriver::targetFrameTime = 16;
-  thread_local Time ClockDriver::frameTime;
+  thread_local Time ClockDriver::target_frame_time = 16;
+  thread_local Time ClockDriver::frame_time;
 
-  void ClockDriver::reset()
+  void ClockDriver::Reset()
   {
-    beginFrameTime = now();
+    begin_frame_time = now();
   }
 
-  Time ClockDriver::sleepRemainder()
+  Time ClockDriver::SleepRemainder()
   {
-    Time delta = now() - beginFrameTime;
-    Time sleepTime = targetFrameTime - delta;
+    Time delta = now() - begin_frame_time;
+    Time sleep_time = target_frame_time - delta;
 
-    if (sleepTime > 0)
+    if (sleep_time > 0)
     {
-      sleep(sleepTime);
-      frameTime = targetFrameTime;
-      return sleepTime;
+      Sleep(sleep_time);
+      frame_time = target_frame_time;
+      return sleep_time;
     }
     else
     {
-      frameTime = delta; // The real tick time is just delta
+      frame_time = delta; // The real tick time is just delta
     }
 
-    beginFrameTime = now();
+    begin_frame_time = now();
 
-    return sleepTime;
+    return sleep_time;
   }
 }

@@ -27,20 +27,20 @@ namespace OMGL
 
     Font(const char* fp) : Font(fp, Priority::Auto) {}
     // priority is priority, check out P_* enum
-    Font(const char* fp, Priority priority) { open(fp, priority); }
+    Font(const char* fp, Priority priority) { Open(fp, priority); }
     ~Font();
     
-    void open(const char* fp, Priority priority);
+    void Open(const char* fp, Priority priority);
 
     // Returns nullptr if the glyph is invalid or failed to read
-    char* getGlyph(unsigned g) noexcept;
+    char* glyph(unsigned g) noexcept;
 
     private:
     Priority priority; // Priority
     unsigned char _type; // Either sizeof(psf2_s) or sizeof(psf1_s)
     char* data = nullptr; // For speed priority
     std::ifstream stream; // For memory priority
-    unsigned char rowSize; // In bytes(8 pixels)
-    unsigned glyphsN;
+    unsigned char row_size; // In bytes(8 pixels)
+    unsigned glyphs_n;
   };
 }

@@ -11,11 +11,11 @@ namespace OMGL
 
   Time ClockDriver::now()
   {
-    return static_cast<Time>( GetTickCount64() - t0 );
+    return static_cast<Time>(GetTickCount64() - t0);
   }
   
-  void ClockDriver::sleep(Time t)
+  void ClockDriver::Sleep(Time t)
   {
-    Sleep(t);
+    ::Sleep(t);
   }
 }

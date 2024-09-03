@@ -17,8 +17,8 @@ namespace OMGL
 
     static unsigned long long t0;
 
-    static thread_local Time targetFrameTime;
-    static thread_local Time frameTime;
+    static thread_local Time target_frame_time;
+    static thread_local Time frame_time;
 
     static ClockDriver& instance()
     {
@@ -27,16 +27,16 @@ namespace OMGL
     }
 
     Time now();
-    void sleep(Time t);
+    void Sleep(Time t);
     // Returns how long we slept, if we did. If we didn't sleep this time is of course negative.
-    Time sleepRemainder();
+    Time SleepRemainder();
     // Should be put right before loop
-    void reset();
+    void Reset();
 
     private:
     ClockDriver();
     ~ClockDriver() = default;
 
-    static thread_local Time beginFrameTime;
+    static thread_local Time begin_frame_time;
   };
 }

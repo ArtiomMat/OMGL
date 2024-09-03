@@ -13,13 +13,6 @@ namespace OMGL
     const char* what() const noexcept override { return str; }
   };
 
-  // General networking exception
-  class NetworkException : public Exception
-  {
-    public:
-    NetworkException(const char* _str) : Exception(_str) {}
-  };
-
   // Exception with allocation or deletion.
   class MemoryException : public Exception
   {
@@ -64,5 +57,11 @@ namespace OMGL
     public:
     unsigned long long code;
     SystemException(int _code, const char* _str) : Exception(_str), code(_code) {}
+  };
+  // Networking exception
+  class NetworkException : public SystemException
+  {
+    public:
+    NetworkException(int _code, const char* _str) : SystemException(_code, _str) {}
   };
 }
