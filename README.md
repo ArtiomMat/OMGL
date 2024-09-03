@@ -19,13 +19,15 @@ Might change too.
 - [ ] Camera for viewing.
 - [ ] Advanced shading to prepare for next step.
   - [ ] Specular highlighting.
-  - [ ] Metalic shaders.
+  - [ ] Metallic shaders.
   - [ ] Sheen.
   - [ ] Sub-surface scattering, a cool one.
-- [ ] Writing shaders for more complex maps.
+  - [ ] Understand and tackle some PBR.
+- [ ] Writing shaders for more complex maps. WITH PBR!
   - [ ] Good ol' bump maps.
   - [ ] Normal maps.
   - [ ] Specular maps.
+  - [ ] The rest of the stuff.
 - [ ] Rigging.
 - [ ] Animation?
 - [ ] Extras.
