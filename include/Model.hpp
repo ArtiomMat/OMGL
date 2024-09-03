@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gl.hpp"
+#include "Program.hpp"
 
 namespace omgl
 {
@@ -10,6 +11,7 @@ namespace omgl
     Model(const char* path);
     ~Model();
 
-    GLuint vab, eab;
+    private:
+    GLuint vao, vbo, ebo;
   };
 }

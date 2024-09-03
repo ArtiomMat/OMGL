@@ -28,6 +28,7 @@ Might change too.
 - [ ] Rigging.
 - [ ] Animation?
 - [ ] Extras.
+  - [ ] Implement for Linux, not that complex.
   - [ ] Font rendering. For now monospaced.
   - [ ] Using the new font renderer to render useful info.
 
