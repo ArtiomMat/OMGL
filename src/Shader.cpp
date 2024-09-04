@@ -35,6 +35,10 @@ namespace omgl
       throw SystemException(glGetError(), "Creating shader.");
     }
 
+    // Copy the path before anything else
+    strcpy(path.get(), _path);
+
+
     bool _success = Reload();
     if (success != nullptr)
     {
@@ -49,7 +53,8 @@ namespace omgl
 
     if (!f.is_open())
     {
-      throw OpenException("Opening shader file.");
+      std::string msg = (std::stringstream() << "Failed to open '" << path.get() << "'.").str();
+      throw omgl::SystemException(0, msg.c_str());
     }
 
     auto data_size = std::filesystem::file_size(path.get());

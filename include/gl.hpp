@@ -6,18 +6,6 @@
 
 #include "Exception.hpp"
 
-// #ifdef _WIN32
-//   typedef void* OMGLContext;
-// #else
-//   #error Gotta define it based on the system API.
-// #endif
-
-// void omglCreateContext();
-// void omglMakeCurrent(omgl::Context&);
-// void omglGetCurrentContext();
-// void omglDestroyContext();
-// void omglSwapBuffers();
-
 // WILL NOT WORK WITHOUT CONTEXT!
 // If a function fails to load nullptr is returned. Up to the caller to decide what to do with that.
 void* omglGetProcAddress(const char* str) noexcept;
@@ -34,6 +22,7 @@ void omglGetAllProcAddresses();
 EXTERN PFNGLBUFFERDATAPROC glBufferData;
 EXTERN PFNGLGENBUFFERSPROC glGenBuffers;
 EXTERN PFNGLBINDBUFFERPROC glBindBuffer;
+EXTERN PFNGLDELETEBUFFERSPROC glDeleteBuffers;
 
 EXTERN PFNGLCREATESHADERPROC glCreateShader;
 EXTERN PFNGLSHADERSOURCEPROC glShaderSource;
@@ -48,6 +37,7 @@ EXTERN PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
 // EXTERN PFNGLDRAWARRAYSEXTPROC glDrawArrays;
 EXTERN PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
 EXTERN PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
+EXTERN PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
 
 EXTERN PFNGLCREATEPROGRAMPROC glCreateProgram;
 EXTERN PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;

@@ -38,6 +38,7 @@ void omglGetAllProcAddresses()
   // LOAD(glDrawArrays);
   LOAD(glVertexAttribPointer);
   LOAD(glEnableVertexAttribArray);
+  LOAD(glDeleteVertexArrays);
 
   LOAD(glCreateProgram);
   LOAD(glLinkProgram);

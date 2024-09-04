@@ -152,6 +152,11 @@ namespace omgl
         HandleEvent();
         break;
 
+        case WM_KEYDOWN:
+        event.type = Event::Type::Press;
+        HandleEvent();
+        break;
+
         default:
         DispatchMessageW(&msg);
         return; // Because we dispatch in another case

@@ -28,6 +28,12 @@ Might change too.
   - [ ] Normal maps.
   - [ ] Specular maps.
   - [ ] The rest of the stuff.
+- [ ] Post processing.
+  - [ ] Rendering to a texture.
+  - [ ] Applying simple anti-aliasing.
+  - [ ] Bloom.
+  - [ ] Film, or just general grain.
+  - [ ] Palettizing.
 - [ ] Rigging.
 - [ ] Animation?
 - [ ] Extras.

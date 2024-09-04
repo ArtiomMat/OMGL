@@ -38,7 +38,7 @@ namespace omgl
     private:
     GLuint id = 0;
     GLuint program_id = 0;
-
+    // For reloading
     std::unique_ptr<char[]> path;
   };
 }
